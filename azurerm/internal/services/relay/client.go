@@ -8,6 +8,7 @@ import (
 type Client struct {
 	NamespacesClient        *relay.NamespacesClient
 	HybridConnectionsClient *relay.HybridConnectionsClient
+	WCFRelaysClient         *relay.WCFRelaysClient
 }
 
 func BuildClient(o *common.ClientOptions) *Client {
@@ -17,8 +18,12 @@ func BuildClient(o *common.ClientOptions) *Client {
 	HybridConnectionsClient := relay.NewHybridConnectionsClientWithBaseURI(o.ResourceManagerEndpoint, o.SubscriptionId)
 	o.ConfigureClient(&HybridConnectionsClient.Client, o.ResourceManagerAuthorizer)
 
+	WCFRelaysClient := relay.NewWCFRelaysClientWithBaseURI(o.ResourceManagerEndpoint, o.SubscriptionId)
+	o.ConfigureClient(&WCFRelaysClient.Client, o.ResourceManagerAuthorizer)
+
 	return &Client{
 		NamespacesClient:        &NamespacesClient,
 		HybridConnectionsClient: &HybridConnectionsClient,
+		WCFRelaysClient:         &WCFRelaysClient,
 	}
 }
